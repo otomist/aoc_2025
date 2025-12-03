@@ -8,7 +8,7 @@ def getBest(s: str, remainingNeeded):
     MAX = 9
     nextStart = 0
     for i,c in enumerate(s):
-        if i == len(s) - remainingNeeded:
+        if i >= len(s)+1 - remainingNeeded:
             break
         n = int(c)
         if n>d1:
@@ -19,19 +19,28 @@ def getBest(s: str, remainingNeeded):
     return d1, s[nextStart:]
 
 
-
-
+def calc(line: str):
+    digitsNeeded = 12
+    s=line
+    res = []
+    while digitsNeeded>0:
+        digit, s = getBest(s, digitsNeeded)
+        digitsNeeded-=1
+        res.append(str(digit))
+    return int("".join(res))
 
 with open("data.txt") as f:
     lines = f.read().split("\n")
     total = 0
     for i,line in enumerate(lines):
-        print('==========',i)
-        res = getBest(line)
+        res = calc(line)
         print("res", res)
-        total+=res
+        total+=int(res)
     
     print("total", total)
+    print("diff", 3121910778619 - total)
+
+    # 3121910778619
 
 
 # def p1(line: str):
